@@ -1,0 +1,35 @@
+
+class Solution
+{ 
+    //Function to find if there is a celebrity in the party or not.
+    int celebrity(int M[][], int n)
+    {
+    	// code here 
+    	Stack<Integer> st = new Stack<>();
+    	
+    	for(int i=0; i < n; i++){
+    	    st.push(i);
+    	}
+    	while(st.size() > 1){
+    	    int a = st.pop();
+    	    int b = st.pop();
+    	    
+    	    if(M[a][b] == 1){
+    	        st.push(b);
+    	    }else{
+    	        st.push(a);
+    	    }
+    	}
+    	int potCel = st.pop();
+    	
+    	for(int i=0; i < n; i++){
+    	    if(i != potCel){
+    	       if(M[potCel][i] == 1 || M[i][potCel] == 0){
+        	        return -1;
+        	    } 
+    	    }
+    	    
+    	}
+    	return potCel;
+    }
+}
