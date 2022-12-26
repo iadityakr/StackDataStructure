@@ -1,0 +1,53 @@
+# Get Minimum Element from Stack in O(1)
+
+class GfG
+{
+    int minEle;
+    Stack<Integer> st = new Stack<>();
+    
+
+    /*returns min element from stack*/
+    int getMin()
+    {
+	// Your code here
+	    if(st.size() == 0){
+	        return -1;
+	    }
+	    return minEle;
+    }
+    
+    /*returns poped element from stack*/
+    int pop()
+    {
+	// Your code here
+	    if(st.size() == 0){
+	        return -1;
+	    }else{
+	        if(st.peek() >= minEle){
+	            return st.pop();
+	        }else{
+	            int ele = minEle;
+	            minEle = 2*minEle - st.pop();
+	            return ele;
+	        }
+	    }
+    }
+
+    /*push element x into the stack*/
+    void push(int x)
+    {
+	// Your code here
+	    if(st.size() == 0){
+	        
+	        st.push(x);
+	        minEle = x;
+	    }else{
+	        if(x >= minEle){
+	            st.push(x);
+	        }else{
+	            st.push(2*x - minEle);
+	            minEle = x;
+	        }
+	    }
+    }	
+}
