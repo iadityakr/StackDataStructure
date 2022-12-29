@@ -1,0 +1,52 @@
+class Queue{
+	int rear, front, size, count;
+	int [] arr;
+	
+	public Queue(int cap) {
+		size = cap;
+		arr = new int[size];
+		rear = front = count = 0;
+	}
+	public void push(int data) {
+		if(count == size) {
+			System.out.println("Queue is full");
+		}else {
+			arr[rear % size] = data;
+			rear++;
+			count++;
+		}
+	}
+	public int pop() {
+		if(count == 0) {
+			return -1;
+		}
+		else {
+			int num = arr[front % size];
+			arr[front % size] = -1;
+			front++;
+			count--;
+			return num;
+		}
+	}
+	public int peek() {
+		if(count == 0) {
+			return -1;
+		}else {
+			return arr[front];
+		}
+	}
+}
+
+public class Main {
+	
+	public static void main(String[] args) {
+		Queue q = new Queue(5);
+		q.push(10);
+		q.push(20);
+		q.push(30);
+		
+		System.out.println("Popped element : "+q.pop());
+		System.out.println("Top element is : "+q.peek());
+		
+	}
+}
