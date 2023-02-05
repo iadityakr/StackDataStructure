@@ -1,0 +1,80 @@
+class LRUCache
+{
+    static class Node{
+        int key;
+        int value;
+        Node prev, next;
+        Node(int key, int value){
+            this.key = key;
+            this.value = value;
+        }
+    }
+    private static Map<Integer, Node> hm;
+    private static Node head, tail;
+    private static int capacity;
+    private static int count;
+    
+    //Constructor for initializing the cache capacity with the given value.
+    LRUCache(int cap)
+    {
+        //code here
+        hm = new HashMap<>();
+        head = new Node(0, 0);
+        tail = new Node(0, 0);
+        capacity = cap;
+        count = 0;
+        head.next = tail;
+        tail.prev = head;
+        tail.next = null;
+        head.prev = null;
+    }
+    
+    public static void insertAtFront(Node node){
+        node.next = head.next;
+        node.next.prev = node;
+        head.next = node;
+        node.prev = head;
+    }
+    public static void remove(Node node){
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+    }
+
+    //Function to return value corresponding to the key.
+    public static int get(int key)
+    {
+        if(hm.get(key) != null){
+            Node temp = hm.get(key);
+            int val = temp.value;
+            remove(temp);
+            insertAtFront(temp);
+            return val;
+        }else{
+            return -1;
+        }
+    }
+
+    //Function for storing key-value pair.
+    public static void set(int key, int value)
+    {
+        if(hm.get(key) != null){
+            Node temp = hm.get(key);
+            temp.value = value;
+            hm.put(key, temp);
+            remove(temp);
+            insertAtFront(temp);
+        }else{
+            Node node = new Node(key, value);
+            hm.put(key, node);
+            if(count < capacity){
+                count++;
+                insertAtFront(node);
+            }else{
+                hm.remove(tail.prev.key);
+                remove(tail.prev);
+                insertAtFront(node);
+            }
+            
+        }
+    }
+}
